@@ -1,13 +1,12 @@
 from abc import ABC
-from datetime import datetime
+from utils import add_years_to_date
 
 
 
 class NubbinBattery(ABC):
-    def __init__(self, date_current, last_service_date, current_mileage, last_service_mileage):
-        super().__init__(last_service_date)
+    def __init__(self, current_date, last_service_date, current_mileage, last_service_mileage):
+        self.current_date = current_date
         self.last_service_date = last_service_date
 
     def battery_should_be_serviced(self):
-        service_threshold_date = self.last_service_date.replace(year=self.last_service_date.year + 3)
-        return (datetime.today().date() - self.last_service_date > 3)
+        return (self.current_date > add_years_to_date(self.last_service_date, 4))
